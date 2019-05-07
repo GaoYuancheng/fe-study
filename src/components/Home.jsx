@@ -1,7 +1,6 @@
 import React from 'react';
 import { Button, Layout, Menu, Icon } from 'antd';
-import {HashRouter, Route , Prompt} from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import {HashRouter, Route , Prompt, Link} from 'react-router-dom';
 import Component1 from '../components/Component1.jsx';
 import Component3 from '../components/Component3.jsx';
 import Component2 from '../components/Component2.jsx';
@@ -12,11 +11,21 @@ const {
 
 class Home extends React.Component{
   state = {
-    
+    selected : ''
   }
-
+  //判断路径
+  getPathname = () =>{
+    // let pathname = this.props.location.pathname;
+    // console.log( this.props )
+    // console.log( pathname.split('/') )
+    // console.log( pathname.indexOf('component1') )
+  }
   componentDidMount = () =>{
-
+    console.log( 'home', this.props )
+    this.getPathname()
+    this.setState({
+      // selected
+    })
   }
   render(){
     return (
@@ -28,7 +37,7 @@ class Home extends React.Component{
     }}
     >
       <div className="logo" />
-      <Menu theme="dark" mode="inline" defaultSelectedKeys={[this.props.location.pathname]}>
+      <Menu theme="dark" mode="inline" selectedKeys={[this.state.selected]}>
         <Menu.Item key="/component1">
           <Link to='/component1'>
             <Icon type="user" />
@@ -75,19 +84,11 @@ class Home extends React.Component{
         <div style={{ padding: 24, background: '#fff', textAlign: 'center' }}>
           ...
           <br />
-          <Route path="/component1" component={Component1}/>
+          {this.props.children}
+          {/* <Route path="/component1" component={Component1}/>
           <Route path="/component2" component={Component2}/>
-          <Route path="/component3" component={Component3}/>
+          <Route path="/component3" component={Component3}/> */}
           <br />...<br />...<br />...<br />
-          long
-          <br />...<br />...<br />...<br />...<br />...<br />...
-          <br />...<br />...<br />...<br />...<br />...<br />...
-          <br />...<br />...<br />...<br />...<br />...<br />...
-          <br />...<br />...<br />...<br />...<br />...<br />...
-          <br />...<br />...<br />...<br />...<br />...<br />...
-          <br />...<br />...<br />...<br />...<br />...<br />...
-          <br />...<br />...<br />...<br />...<br />...<br />
-          content
         </div>
           
       </Content>

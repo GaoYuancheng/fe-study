@@ -1,7 +1,10 @@
-import React from 'react';
-import '../static/ife31data.js'
+import React, {Fragment} from 'react';
+import {HashRouter, Route , Prompt, Link, Switch} from 'react-router-dom';
+import SelectTable from './component1/SelectTable.jsx'
+import SelectTable2 from './component1/SelectTable2.jsx'
+import SelectTable3 from './component1/SelectTable3.jsx'
 
-import { Select, Table } from 'antd';
+import { Select, Table, Menu } from 'antd';
 const sourceData = [{
   product: "手机",
   region: "华东",
@@ -109,9 +112,10 @@ class Component1 extends React.Component{
         dataIndex: 'December',
       }
     ],
-    dataSource: []
+    dataSource: [],
+    current: '/component1/SelectTable',
   }
-
+  //select选框
   getNewDataSource = (firstValue,secondValue) =>{
     let newDataSource = []
     console.log( firstValue, secondValue )
@@ -160,29 +164,74 @@ class Component1 extends React.Component{
       secondValue: value,
     });
   }
+
+  //顶部导航
+  handleClick = (e) => {
+    console.log('click ', e);
+    this.setState({
+      current: e.key,
+    });
+  }
+
+  //生命周期
   componentDidMount(){
-    console.log( sourceData )
+    // console.log( sourceData )
+    console.log( this.props )
     this.getNewDataSource( this.state.firstValue,this.state.secondValue )
+    this.setState({
+      // current : this.props.location.pathname
+    })
   }
   render(){
     return (
-      <div>
-        <Select
-          defaultValue={firstData[0]}
-          style={{ width: 120, marginRight : 10 }}
-          onChange={this.onFirstValueChange}
-        >
-          {firstData.map(item => <Option key={item}>{item}</Option>)}
-        </Select>
-        <Select
-          style={{ width: 120 }}
-          value={this.state.secondValue}
-          onChange={this.onSecondValueChange}
-        >
-          {secondData[this.state.firstValue].map(item => <Option key={item}>{item}</Option>)}
-        </Select>
-        <Table dataSource={this.state.dataSource} columns={this.state.columns} style = {{marginTop : 20}} />
-      </div>
+      <Fragment>
+        <div style = {{marginBottom : 20}}>
+          <Menu
+          onClick={this.handleClick}
+          selectedKeys={[this.state.current]}
+          mode="horizontal"
+          >
+            <Menu.Item key="SelectTable">
+              <Link to="SelectTable">
+              /component1/SelectTable
+              </Link>
+            </Menu.Item>
+            <Menu.Item key="SelectTable2">
+              <Link to="SelectTable2">
+              /component1/SelectTable2
+              </Link>
+            </Menu.Item>
+            <Menu.Item key="SelectTable3">
+              <Link to="SelectTable3">
+              /component1/SelectTable3
+              </Link>
+            </Menu.Item>
+          </Menu>
+        </div>
+        <div>
+          <Select
+            defaultValue={firstData[0]}
+            style={{ width: 120, marginRight : 10 }}
+            onChange={this.onFirstValueChange}
+          >
+            {firstData.map(item => <Option key={item}>{item}</Option>)}
+          </Select>
+          <Select
+            style={{ width: 120 }}
+            value={this.state.secondValue}
+            onChange={this.onSecondValueChange}
+          >
+            {secondData[this.state.firstValue].map(item => <Option key={item}>{item}</Option>)}
+          </Select>
+          <Table dataSource={this.state.dataSource} columns={this.state.columns} style = {{marginTop : 20}} />
+          <Switch>
+            <Route path="/component1/SelectTable" component={SelectTable} exact/>
+            <Route path="/component1/SelectTable2" component={SelectTable2} exact/>
+            <Route path="/component1/SelectTable3" component={SelectTable3} exact/>
+          </Switch>
+        </div>
+      </Fragment>
+
     )
   }
 }
