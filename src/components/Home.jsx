@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Layout, Menu, Icon } from 'antd';
-import {HashRouter, Route , Prompt, Link} from 'react-router-dom';
+import {HashRouter, Route , Prompt, Link, withRouter} from 'react-router-dom';
 import Component1 from '../components/Component1.jsx';
 import Component3 from '../components/Component3.jsx';
 import Component2 from '../components/Component2.jsx';
@@ -13,18 +13,26 @@ class Home extends React.Component{
   state = {
     selected : ''
   }
-  //判断路径
-  getPathname = () =>{
-    // let pathname = this.props.location.pathname;
-    // console.log( this.props )
-    // console.log( pathname.split('/') )
-    // console.log( pathname.indexOf('component1') )
+
+  handleClick = (e) => {
+    // console.log('click ', e);
+    this.setState({
+      selected: e.key,
+    });
   }
+
+  //在url变化时调用的生命周期函数
+  componentWillReceiveProps = () =>{
+    console.log('props2',this.props.history.location.pathname)
+    this.setState({
+      selected : this.props.history.location.pathname.split('/')[1]
+    })
+  }
+
   componentDidMount = () =>{
     console.log( 'home', this.props )
-    this.getPathname()
     this.setState({
-      // selected
+      selected : this.props.location.pathname.split('/')[1]
     })
   }
   render(){
@@ -37,20 +45,20 @@ class Home extends React.Component{
     }}
     >
       <div className="logo" />
-      <Menu theme="dark" mode="inline" selectedKeys={[this.state.selected]}>
-        <Menu.Item key="/component1">
+      <Menu theme="dark" mode="inline" selectedKeys={[this.state.selected]} onClick={this.handleClick}>
+        <Menu.Item key="component1">
           <Link to='/component1'>
             <Icon type="user" />
             <span className="nav-text">nav 1</span>
           </Link>
         </Menu.Item>
-        <Menu.Item key="/component2">
+        <Menu.Item key="component2">
           <Link to='/component2'>
             <Icon type="video-camera" />
             <span className="nav-text">nav 2</span>
           </Link>
         </Menu.Item>
-        <Menu.Item key="/component3">
+        <Menu.Item key="component3">
           <Link to='/component3'>
             <Icon type="upload" />
             <span className="nav-text">nav 3</span>
@@ -101,4 +109,5 @@ class Home extends React.Component{
   }
 }
 
+Home = withRouter(Home)
 export default Home;

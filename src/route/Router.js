@@ -9,16 +9,21 @@ import SelectTable2 from '../components/component1/SelectTable2.jsx'
 import SelectTable3 from '../components/component1/SelectTable3.jsx'
 
 const BasicRoute = () => (
-    <HashRouter>
+      <HashRouter>
+        {/* <Route path = "/" component= { Home } exact/> */}
         <Home >
-          <Route path="/component1/:num" component={Component1}/>
+          <Switch>
+            <Route path="/component1" component={Component1}/>
+            <Route path="/component1/:num" component={Component1}/>
 
             {/* <Route exact path="SelectTable" component={SelectTable} />
             <Route exact path="SelectTable2" component={SelectTable2} />
             <Route exact path="SelectTable3" component={SelectTable3} /> */}
           {/* </Route> */}
-          <Route path="/component2" component={Component2}/>
-          <Route path="/component3" component={Component3}/>
+            <Route path="/component2" component={Component2}/>
+            <Route path="/component3" component={Component3}/>
+        {/* </Route> */}
+          </Switch>
         </Home>
     </HashRouter>
 );
