@@ -1,0 +1,8 @@
+.ant-table-tbody .ant-table-row td, .ant-table-thead tr th {
+      padding : 10px 5px !important;
+      text-align : center !important
+}
+.ant-table-tbody .ant-table-row td{
+  max-width: 55px;
+}
+
