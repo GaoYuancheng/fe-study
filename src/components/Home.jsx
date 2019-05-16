@@ -1,10 +1,10 @@
 import React from 'react';
-import { Button, Layout, Menu, Icon } from 'antd';
-import {HashRouter, Route , Prompt, Link, withRouter} from 'react-router-dom';
+import {  Layout, Menu, Icon } from 'antd';
+import { Prompt, Link, withRouter} from 'react-router-dom';
 // import '../assets/windowClick'
-import Component1 from '../components/Component1.jsx';
-import Component3 from '../components/Component3.jsx';
-import Component2 from '../components/Component2.jsx';
+// import Component1 from '../components/Component1.jsx';
+// import Component3 from '../components/Component3.jsx';
+// import Component2 from '../components/Component2.jsx';
 
 const {
   Header, Content, Footer, Sider,

@@ -1,6 +1,9 @@
 import React,{Fragment} from 'react';
 import { Icon, Table, InputNumber, Button } from 'antd';
+// import Curved from '../BizCharts'
 import '../../style/SelectTable3.css'
+import ECharts from '../ECharts';
+
 
 const sourceData = [
   {
@@ -115,7 +118,8 @@ const columns = [
   }
 ];
 class Obj {
-  constructor(key, dataIndex, sale){
+  constructor(key, dataIndex, sale, monthNo){
+    this.monthNo = monthNo
     this.key = key
     this.dataIndex = dataIndex
     this.sale = sale
@@ -128,14 +132,30 @@ class SelectTable3 extends React.Component{
   state = {
     inputValue : '',
     columns : [],
-    dataSource : []
+    dataSource : [],
+    chartData : []
+  }
+
+
+  //键盘事件
+  keyUp = (record, text,e) => {
+    // console.log(e.keyCode)
+    e.keyCode === 13 && this.buttonClick(record, text)
   }
 
   //点击按钮事件
   buttonClick = (record, text) => {
-    console.log( text )
+    // console.log( text )
     this.changeProp( record, text, 'sale', this.state.inputValue )
     this.changeProp( record, text, 'editStatus', false  )
+    let newChartData = this.state.chartData;
+    // console.log('newChartData',newChartData)
+    // console.log('text',text)
+    // console.log( newChartData[text.key].data[text.monthNo] )
+    newChartData[text.key].data[text.monthNo] = this.state.inputValue
+    this.setState({
+      chartData : newChartData
+    })
   }
 
   //输入框变化回调
@@ -152,14 +172,18 @@ class SelectTable3 extends React.Component{
     record[text.dataIndex][propName] = value;
     let newDataSource = this.state.dataSource;
     newDataSource[key] = record;
+    
+    
+
     this.setState({
-      dataSource : newDataSource
+      dataSource : newDataSource,
+     
     })
   }
 
   //点击图标事件
   iconClick = (record,text) => {
-    console.log( 'iconClick' )
+    // console.log( 'iconClick' )
     this.changeProp(record, text, 'canEdit', false);
     this.changeProp(record, text, 'editStatus', true);
     this.setState({
@@ -175,29 +199,36 @@ class SelectTable3 extends React.Component{
     sourceData.forEach((item,i)=>{
       const { region = '', product = '', sale = [] } = item
       const [ January, February, March, April, May, June, July, August, September, October, November, December] = sale;
-      let TableObj = {
+      let tableObj = {
         key : i,
         good : product,
         area : region,
-        January : new Obj(i,'January', January ),
-        February : new Obj(i,'February', February ),
-        March : new Obj(i,'March', March ),
-        April : new Obj(i,'April', April ),
-        May : new Obj(i,'May', May ),
-        June : new Obj(i,'June', June ),
-        July : new Obj(i,'July', July ),
-        August : new Obj(i,'August', August ),
-        September : new Obj(i,'September', September ),
-        October : new Obj(i,'October', October ),
-        November : new Obj(i,'November', November ),
-        December : new Obj(i,'December', December )
+        January : new Obj(i,'January', January, 0 ),
+        February : new Obj(i,'February', February, 1 ),
+        March : new Obj(i,'March', March, 2 ),
+        April : new Obj(i,'April', April, 3 ),
+        May : new Obj(i,'May', May, 4 ),
+        June : new Obj(i,'June', June, 5 ),
+        July : new Obj(i,'July', July, 6 ),
+        August : new Obj(i,'August', August, 7 ),
+        September : new Obj(i,'September', September, 8 ),
+        October : new Obj(i,'October', October, 9 ),
+        November : new Obj(i,'November', November, 10, ),
+        December : new Obj(i,'December', December, 11 )
       }
-      newDataSource.push( TableObj ) 
+      let chartObj = {
+        name : region + '-' + product,
+        data : sale,
+        type : 'line'
+      }
+      newDataSource.push( tableObj ) 
+      newChartData.push( chartObj )
     })
     // console.log('newChartData',newChartData)
     // return newDataSource;
     this.setState({
       dataSource : newDataSource,
+      chartData : newChartData
     })
   }
 
@@ -209,7 +240,6 @@ class SelectTable3 extends React.Component{
         title,
         dataIndex,
         render : (text,record) =>{
-          // console.log( text )
           return (
             isNumber ?
             <div 
@@ -223,7 +253,7 @@ class SelectTable3 extends React.Component{
                     defaultValue = {text.sale} 
                     style = {{width : 80}}
                     onChange = {this.inputNumberChange}
-                    onKeyUp = {this.buttonClick.bind( this, record, text )}
+                    onKeyUp = {this.keyUp.bind( this,record,text )}
                   />
                   <Button 
                     size = 'small' 
@@ -249,6 +279,7 @@ class SelectTable3 extends React.Component{
         }
       }
     })
+    // console.log( newColumns )
     this.setState({
       columns : newColumns
     })
@@ -264,6 +295,8 @@ class SelectTable3 extends React.Component{
       <Fragment>
         <div>SelectTable3</div>
         <Table dataSource={this.state.dataSource} columns={this.state.columns} style = {{marginTop : 20}} />
+        {/* <Curved chartData = { this.state.chartData }/> */}
+        <ECharts chartData = { this.state.chartData } />
       </Fragment>
     )
   }

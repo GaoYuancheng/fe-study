@@ -64,7 +64,7 @@ class SelectTable2 extends React.Component{
     let chartData = []
     sourceData.forEach((item, i)=>{
       const { product, region, sale } = item;
-      //如果所选的数据中有这个region 并且有 product
+      // 如果所选的数据中有这个region 并且有 product
       if(checkedListFirst.indexOf( region ) !== -1 && checkedListSecond.indexOf( product ) !== -1) {
         let chartObj = {
           name : region + '-' + product ,

@@ -1,5 +1,5 @@
 import React, {Fragment} from 'react';
-import {HashRouter, Route , Prompt, Link, Switch} from 'react-router-dom';
+import { Route , Link, Switch} from 'react-router-dom';
 import SelectTable from './component1/SelectTable.jsx'
 import SelectTable2 from './component1/SelectTable2.jsx'
 import SelectTable3 from './component1/SelectTable3.jsx'

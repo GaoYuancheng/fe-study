@@ -4,9 +4,9 @@ import Home from '../components/Home.jsx';
 import Component1 from '../components/Component1.jsx';
 import Component3 from '../components/Component3.jsx';
 import Component2 from '../components/Component2.jsx';
-import SelectTable from '../components/component1/SelectTable.jsx'
-import SelectTable2 from '../components/component1/SelectTable2.jsx'
-import SelectTable3 from '../components/component1/SelectTable3.jsx'
+// import SelectTable from '../components/component1/SelectTable.jsx'
+// import SelectTable2 from '../components/component1/SelectTable2.jsx'
+// import SelectTable3 from '../components/component1/SelectTable3.jsx'
 
 const BasicRoute = () => (
       <HashRouter>
